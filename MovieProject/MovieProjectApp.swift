@@ -11,7 +11,10 @@ import SwiftUI
 struct MovieProjectApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView{
+                ContentView()
+            }
+            .navigationViewStyle(.stack)
         }
     }
 }
