@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var viewModel = ViewModel()
+    @EnvironmentObject var viewModel: ViewModel
     @State var text:String = ""
     @State var showSearchBar : Bool = false
     var body: some View {
@@ -45,7 +45,7 @@ struct ContentView: View {
             case .Dashboard:
                 Text("Dashboard View")
             case .Watch:
-                ListView()
+                ListView(text: $text, showSearchBar: $showSearchBar)
             case .Media:
                 Text("Media View")
             case .More:
@@ -108,7 +108,6 @@ struct ContentView: View {
         }
         .edgesIgnoringSafeArea(.bottom)
         .navigationBarHidden(true)
-        .environmentObject(viewModel)
     }
 }
 

@@ -8,35 +8,56 @@
 import SwiftUI
 
 struct ListView: View {
+    @State var gotoDetailPage: Bool = false
+    @Binding var text : String
+    @Binding var showSearchBar : Bool
     @EnvironmentObject var viewModel: ViewModel
+    @StateObject var moviewDetailViewModel = MovieDetailVM()
+    let columns = [
+        GridItem(.flexible())
+    ]
+    let columns1 = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
     var body: some View {
         VStack{
+            NavigationLink(destination: MoviesDetailPage(),isActive: $gotoDetailPage) {
+                EmptyView()
+            }
             ScrollView{
-                ForEach(Array(zip(viewModel.moviesModel.results, viewModel.image)) ,id: \.0.id){ items in
-                    NavigationLink {
-                        
-                    } label: {
-                        Image(uiImage: items.1)
-                            .resizable()
-                            .frame(width: UIScreen.main.bounds.width-30, height: 200, alignment: .center)
-                            .scaledToFit()
+                LazyVGrid(columns: showSearchBar ? columns1:columns , alignment: .center, spacing: 10){
+                    ForEach(text.isEmpty ? viewModel.moviesModel.results:viewModel.moviesModel.results.filter({$0.title.lowercased().contains(text.lowercased())}),id: \.id){items in
+                        Button {
+                           moviewDetailViewModel.getMovieDetail(id: String(items.id))
+                            gotoDetailPage.toggle()
+                        } label: {
+                            AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/"+items.posterPath) ){image in
+                                image
+                                    .resizable()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .frame(width:showSearchBar ? (UIScreen.main.bounds.width-30)/2:UIScreen.main.bounds.width-30, height: showSearchBar ? 200/2:200, alignment: .center)
                             .cornerRadius(15)
-                            .padding(.top)
-                            .overlay(Text(items.0.title)
+                            .overlay(Text(items.title)
                                         .fontWeight(.bold)
                                         .foregroundColor(.white)
-                                        .frame(width: UIScreen.main.bounds.width-50, height: 170, alignment: .bottomLeading))
+                                        .frame(width:showSearchBar ? (UIScreen.main.bounds.width-50)/2:UIScreen.main.bounds.width-50, height:showSearchBar ? 170/2:170, alignment: .bottomLeading))
+                            
+                        }
                     }
                 }
+                Spacer()
             }
-            Spacer()
         }
         .background(Color("white").ignoresSafeArea())
+        .environmentObject(moviewDetailViewModel)
     }
 }
 
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
-        ListView()
+        ListView(text: .constant(""), showSearchBar: .constant(false))
     }
 }

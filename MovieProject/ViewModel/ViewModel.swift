@@ -4,7 +4,7 @@
 //
 //  Created by Theappmedia on 7/26/22.
 //
-
+import Foundation
 import SwiftUI
 
 class ViewModel: ObservableObject {
@@ -14,6 +14,7 @@ class ViewModel: ObservableObject {
     @Published var buttonPressed : ButtonPressed = .Watch
     @Published var moviesModel : MoviesDataModel = MoviesDataModel(dates: Dates(maximum: "", minimum: ""), page: 0, results: [Result(adult: false, backdropPath: "", genreIDS: [0], id: 0, originalLanguage: OriginalLanguage(rawValue: "en") ?? OriginalLanguage.ja, originalTitle: "", overview: "", popularity: 0, posterPath: "", releaseDate: "", title: "", video: false, voteAverage: 0, voteCount: 0)], totalPages: 0, totalResults: 0)
     @Published var image: [UIImage] = []
+    @Published var movieDetail : MoviesDetailModel?
     
     func loadImage(for urlString: String) {
         guard let url = URL(string: urlString) else { return }
@@ -53,6 +54,27 @@ class ViewModel: ObservableObject {
             }
         }
         task.resume()
+    }
+    func getMovieDetail(id: String){
+        var url = URLRequest(url: URL(string: "https://api.themoviedb.org/3/movie/\(id)?api_key=5e4f9c434a8e35fae00ab6c40dd782e3")!,timeoutInterval: Double.infinity)
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data {
+                do{
+                    let dt = try JSONDecoder().decode(MoviesDetailModel.self, from: data)
+                    DispatchQueue.main.async {
+                        self.movieDetail = dt
+                    }
+                   
+                }catch let jsonerror as NSError{
+                    print(jsonerror.localizedDescription)
+                }
+                
+            }
+            if let error = error {
+                print(error)
+            }
+        }
+        .resume()
     }
 }
 

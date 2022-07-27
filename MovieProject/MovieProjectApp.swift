@@ -9,11 +9,14 @@ import SwiftUI
 
 @main
 struct MovieProjectApp: App {
+    @StateObject var viewModel = ViewModel()
     var body: some Scene {
         WindowGroup {
             NavigationView{
                 ContentView()
+                    .environmentObject(viewModel)
             }
+           
             .navigationViewStyle(.stack)
         }
     }
