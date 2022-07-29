@@ -19,6 +19,7 @@ struct ContentView: View {
                     TextField("TV show , movies and more", text: $text)
                     Button {
                         showSearchBar.toggle()
+                        text = ""
                     } label: {
                         Image("cross")
                             .resizable()
@@ -32,8 +33,8 @@ struct ContentView: View {
             }else{
                 HStack{
                     Text("Watch")
+                        .fontWeight(.bold)
                     Spacer()
-                    
                     Button {
                         showSearchBar.toggle()
                     } label: {

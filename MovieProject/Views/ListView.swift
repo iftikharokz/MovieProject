@@ -33,9 +33,6 @@ struct ListView: View {
                             .fontWeight(.medium)
                             .padding([.top,.leading])
                             .font(.caption)
-                            .onTapGesture {
-                                
-                            }
                         Spacer()
                     }
                     Divider()
@@ -108,6 +105,7 @@ struct ListView: View {
                 Spacer()
             }
         }
+        .padding()
         .background(Color("white").ignoresSafeArea())
     }
 }
