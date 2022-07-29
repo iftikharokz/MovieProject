@@ -70,7 +70,10 @@ struct SelectSeat: View {
                             .frame(width: 200, alignment: .leading)
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(.gray,lineWidth: 1)
-                                .frame(width: 200, height: 100)
+                                .frame(width: 200, height: 150)
+                                .overlay(Image("seats")
+                                            .resizable()
+                                            .frame(width: 160, height: 100))
                             HStack{
                                 Text("From")
                                     .foregroundColor(Color("gray"))
@@ -90,7 +93,10 @@ struct SelectSeat: View {
                             .frame(width: 200, alignment: .leading)
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(.gray,lineWidth: 1)
-                                .frame(width: 200, height: 100)
+                                .frame(width: 200, height: 150)
+                                .overlay(Image("seats")
+                                            .resizable()
+                                            .frame(width: 160, height: 100))
                             HStack{
                                 Text("From")
                                     .foregroundColor(Color("gray"))
@@ -110,7 +116,10 @@ struct SelectSeat: View {
                             .frame(width: 200, alignment: .leading)
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(.gray,lineWidth: 1)
-                                .frame(width: 200, height: 100)
+                                .frame(width: 200, height: 150)
+                                .overlay(Image("seats")
+                                            .resizable()
+                                            .frame(width: 160, height: 100))
                             HStack{
                                 Text("From")
                                     .foregroundColor(Color("gray"))
@@ -128,9 +137,13 @@ struct SelectSeat: View {
                                     .foregroundColor(Color("gray"))
                             }
                             .frame(width: 200, alignment: .leading)
+                            
                             RoundedRectangle(cornerRadius: 15)
                                 .stroke(.gray,lineWidth: 1)
-                                .frame(width: 200, height: 100)
+                                .frame(width: 200, height: 150)
+                                .overlay(Image("seats")
+                                            .resizable()
+                                            .frame(width: 160, height: 100))
                             HStack{
                                 Text("From")
                                     .foregroundColor(Color("gray"))

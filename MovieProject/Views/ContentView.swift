@@ -26,7 +26,7 @@ struct ContentView: View {
                     }
                 }
                 .padding()
-                .background(Color("lightGray"))
+                .background(Color("white"))
                 .cornerRadius(20)
                 .padding()
             }else{
@@ -60,7 +60,9 @@ struct ContentView: View {
                     viewModel.buttonPressed = .Dashboard
                 } label: {
                     VStack(spacing: 8){
-                        Image(systemName: "person")
+                        Image("dash")
+                            .resizable()
+                            .frame(width: 18, height: 18)
                         Text("Dashboard")
                             .font(.caption)
                     }
@@ -71,7 +73,7 @@ struct ContentView: View {
                     viewModel.buttonPressed = .Watch
                 } label: {
                     VStack(spacing: 8){
-                        Image(systemName: "person")
+                        Image("watch")
                         Text("Watch")
                             .font(.caption)
                     }
@@ -82,7 +84,7 @@ struct ContentView: View {
                     viewModel.buttonPressed = .Media
                 } label: {
                     VStack(spacing: 8){
-                        Image(systemName: "person")
+                        Image("lib")
                         Text("Media Library")
                             .font(.caption)
                     }
@@ -93,7 +95,7 @@ struct ContentView: View {
                     viewModel.buttonPressed = .More
                 } label: {
                     VStack(spacing: 8){
-                        Image(systemName: "person")
+                        Image("Vector")
                         Text("More")
                             .font(.caption)
                     }

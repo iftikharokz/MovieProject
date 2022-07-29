@@ -33,8 +33,13 @@ struct PayView: View {
             Spacer()
             VStack{
                 
+//                HStack{
+//                    Spacer()
+//                }
                 HStack{
-                    Spacer()
+                    Image("pay1")
+                        .padding(.top,44)
+                    Image("pay2")
                 }
               Spacer()
                 HStack{
@@ -57,24 +62,24 @@ struct PayView: View {
                     HStack{
                         VStack{
                             HStack{
-                                Image(systemName: "person")
+                                Image("1")
                                 Text("Selected")
                                     .padding(.vertical)
                             }
                             HStack{
-                                Image(systemName: "person")
+                                Image("2")
                                 Text("VIP(150$")
                             }
                         }
                         Spacer()
                         VStack{
                             HStack{
-                                Image(systemName: "person")
+                                Image("3")
                                 Text("Not Available")
                                     .padding(.vertical)
                             }
                             HStack{
-                                Image(systemName: "person")
+                                Image("4")
                                 Text("Regular(50$")
                             }
                         }
@@ -82,14 +87,19 @@ struct PayView: View {
                     }
                     .padding(.bottom)
                     HStack{
-                        Text("4/3 row")
-                            .frame(width: UIScreen.main.bounds.width*0.32, height: 30)
-                            .background(Color("lightGray"))
-                            .cornerRadius(12)
+                        HStack{
+                            Text("4/3 row")
+                            Image("cross")
+                                .resizable()
+                                .frame(width: 10, height: 10)
+                                .padding(.leading)
+                        }
+                        .frame(width: UIScreen.main.bounds.width*0.32, height: 30)
+                        .background(Color("lightGray"))
+                        .cornerRadius(12)
+                        .padding(.bottom)
                         Spacer()
                     }
-                    .padding(.bottom)
-                    
                     HStack{
                         VStack(spacing:0){
                             Text("Total Price")
