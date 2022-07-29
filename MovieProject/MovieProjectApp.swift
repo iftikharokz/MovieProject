@@ -13,10 +13,9 @@ struct MovieProjectApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView{
-                ContentView()
-                    .environmentObject(viewModel)
+                ContentView(viewModel: viewModel)
             }
-           
+            .environmentObject(viewModel)
             .navigationViewStyle(.stack)
         }
     }

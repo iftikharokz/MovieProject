@@ -54,16 +54,16 @@ struct Result: Codable {
         case voteCount = "vote_count"
     }
 }
-
 enum OriginalLanguage: String, Codable {
     case en = "en"
     case fr = "fr"
     case ja = "ja"
 }
+
 struct MoviesDetailModel: Codable {
     let adult: Bool
     let backdropPath: String
-    let belongsToCollection: BelongsToCollection
+    let belongsToCollection: BelongsToCollection?
     let budget: Int
     let genres: [Genre]
     let homepage: String
@@ -123,7 +123,8 @@ struct Genre: Codable {
 // MARK: - ProductionCompany
 struct ProductionCompany: Codable {
     let id: Int
-    let logoPath, name, originCountry: String
+    let logoPath : String?
+    let name, originCountry: String
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -153,3 +154,47 @@ struct SpokenLanguage: Codable {
         case name
     }
 }
+struct VideosModel: Codable {
+    let id: Int
+    let results: [ResponseModel]
+}
+
+// MARK: - Result
+struct ResponseModel: Codable {
+    let iso639_1: String
+    let iso3166_1: String
+    let name, key: String
+    let site: String
+    let size: Int
+    let type: String
+    let official: Bool
+    let publishedAt : String
+    let id: String
+
+    enum CodingKeys: String, CodingKey {
+        case iso639_1 = "iso_639_1"
+        case iso3166_1 = "iso_3166_1"
+        case name, key, site, size, type, official
+        case publishedAt = "published_at"
+        case id
+    }
+}
+
+//enum ISO3166_1: String, Codable {
+//    case us = "US"
+//}
+//
+//enum ISO639_1: String, Codable {
+//    case en = "en"
+//}
+//
+//enum Site: String, Codable {
+//    case youTube = "YouTube"
+//}
+
+//enum TypeEnum: String, Codable {
+//    case clip = "Clip"
+//    case featurette = "Featurette"
+//    case teaser = "Teaser"
+//    case trailer = "Trailer"
+//}

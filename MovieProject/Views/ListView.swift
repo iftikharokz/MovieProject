@@ -11,8 +11,8 @@ struct ListView: View {
     @State var gotoDetailPage: Bool = false
     @Binding var text : String
     @Binding var showSearchBar : Bool
-    @EnvironmentObject var viewModel: ViewModel
-    @StateObject var moviewDetailViewModel = MovieDetailVM()
+    @StateObject var viewModel : ViewModel
+    @State var overview = ""
     let columns = [
         GridItem(.flexible())
     ]
@@ -22,15 +22,16 @@ struct ListView: View {
     ]
     var body: some View {
         VStack{
-            NavigationLink(destination: MoviesDetailPage(),isActive: $gotoDetailPage) {
+            NavigationLink(destination: MoviesDetailPage(viewModel: viewModel, overview: overview),isActive: $gotoDetailPage) {
                 EmptyView()
             }
             ScrollView{
                 LazyVGrid(columns: showSearchBar ? columns1:columns , alignment: .center, spacing: 10){
                     ForEach(text.isEmpty ? viewModel.moviesModel.results:viewModel.moviesModel.results.filter({$0.title.lowercased().contains(text.lowercased())}),id: \.id){items in
                         Button {
-                           moviewDetailViewModel.getMovieDetail(id: String(items.id))
+                           viewModel.getMovieDetail(id: String(items.id))
                             gotoDetailPage.toggle()
+                            overview = items.overview
                         } label: {
                             AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/"+items.posterPath) ){image in
                                 image
@@ -52,12 +53,11 @@ struct ListView: View {
             }
         }
         .background(Color("white").ignoresSafeArea())
-        .environmentObject(moviewDetailViewModel)
     }
 }
 
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
-        ListView(text: .constant(""), showSearchBar: .constant(false))
+        ListView(text: .constant(""), showSearchBar: .constant(false), viewModel: ViewModel())
     }
 }

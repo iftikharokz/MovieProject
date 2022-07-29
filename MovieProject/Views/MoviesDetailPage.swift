@@ -9,14 +9,28 @@ import SwiftUI
 
 struct MoviesDetailPage: View {
     @Environment(\.presentationMode) var cancel
+    @StateObject var viewModel : ViewModel
+    var overview:String
+    @State var watchTrailer:Bool = false
     var body: some View {
         VStack{
+        
             ZStack{
-                Image("image")
-                    .resizable()
-                    .scaledToFill()
-//                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.6)
-                    .ignoresSafeArea()
+                NavigationLink(destination: YoutubePlayerView(viewModel: viewModel),isActive: $watchTrailer) {
+                    EmptyView()
+                }
+                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/original/"+viewModel.movieDetail.posterPath) ){image in
+                    image
+                        .resizable()
+                        .ignoresSafeArea()
+                } placeholder: {
+                    ProgressView()
+                }
+//                Image("image")
+//                    .resizable()
+//                    .scaledToFill()
+////                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*0.6)
+//                    .ignoresSafeArea()
                 VStack{
                     HStack{
                         Button {
@@ -33,10 +47,10 @@ struct MoviesDetailPage: View {
                     .padding(.leading)
                     Spacer()
                     VStack{
-                        Text("Fortunately we can")
+                        Text("In Theaters "+viewModel.movieDetail.releaseDate)
                             .font(.title2)
-                        Button {
-                            
+                        NavigationLink{
+                            SelectSeat()
                         } label: {
                             Text("Get Tickets")
                                 .fontWeight(.bold)
@@ -45,7 +59,8 @@ struct MoviesDetailPage: View {
                                 .cornerRadius(10)
                         }
                         Button {
-                            
+                            viewModel.getVideoKey(id: String(viewModel.movieDetail.id))
+                            watchTrailer.toggle()
                         } label: {
                             ZStack{
                                 RoundedRectangle(cornerRadius: 8)
@@ -122,19 +137,19 @@ struct MoviesDetailPage: View {
                     Spacer()
                 }
                 ScrollView(showsIndicators: false){
-                    Text("Fortunately we can write one ourselves by leveraging SwiftUI’s view builder system. This means writing a type that must be created using a row and column count, plus a closure it can run to retrieve the views for a given cell in the grid. Inside the body it can then loop over all the rows and columns and create cells inside VStack and HStack to make a grid, each time calling the view closure to ask what should be in the cell.")
+                    Text(overview)
                         .foregroundColor(Color("gray"))
                 }
             }
             .frame(width:UIScreen.main.bounds.width-50, alignment: .leading)
             Spacer()
         }
+        .navigationBarHidden(true)
     }
 }
 
 struct MoviesDetailPage_Previews: PreviewProvider {
     static var previews: some View {
-        MoviesDetailPage()
-.previewInterfaceOrientation(.portrait)
+        MoviesDetailPage(viewModel: ViewModel(), overview: "")
     }
 }

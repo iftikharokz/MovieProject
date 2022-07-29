@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var viewModel: ViewModel
+    @StateObject var viewModel : ViewModel
     @State var text:String = ""
     @State var showSearchBar : Bool = false
     var body: some View {
@@ -20,7 +20,9 @@ struct ContentView: View {
                     Button {
                         showSearchBar.toggle()
                     } label: {
-                        Image(systemName: "arrow.uturn.forward")
+                        Image("cross")
+                            .resizable()
+                            .frame(width: 15, height: 15)
                     }
                 }
                 .padding()
@@ -45,7 +47,7 @@ struct ContentView: View {
             case .Dashboard:
                 Text("Dashboard View")
             case .Watch:
-                ListView(text: $text, showSearchBar: $showSearchBar)
+                ListView(text: $text, showSearchBar: $showSearchBar, viewModel: viewModel)
             case .Media:
                 Text("Media View")
             case .More:
@@ -113,6 +115,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(viewModel: ViewModel())
     }
 }
